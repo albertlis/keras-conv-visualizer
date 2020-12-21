@@ -4,9 +4,9 @@ from tensorflow import keras
 
 
 class FilterVisualization:
-    def __init__(self, model, image_size):
+    def __init__(self, model):
         self.__model = model
-        self.image_size = image_size
+        self.image_size = model.layers[0].input_shape[0][1:]
 
     def __compute_loss(self, input_image, filter_index, feature_extractor):
         activation = feature_extractor(input_image)

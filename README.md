@@ -36,11 +36,12 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.applications import VGG16
 from keras_conv_visualizer.filters import FilterVisualization
 
-model = VGG16(weights="imagenet", include_top=False)
+# Model has to have standarized input (std=0, var=1)!
+model = VGG16(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
 layer_name = "block5_conv3"
 
 # First parameter - trained keras model, second - input_size
-fv = FilterVisualization(model, (224, 224, 3))
+fv = FilterVisualization(model)
 # First parameter - layer feature index (ex. block1_conv1 has (224, 224, 64) index is from 0 to 63)
 # Second parameter - layer name
 loss, img = fv.visualize_filter(0, layer_name)
@@ -56,7 +57,7 @@ Result:
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import VGG16, imagenet_utils
 import matplotlib.pyplot as plt
-from keras_conv_visualization.gradcam import GradCAM
+from keras_conv_visualizer.gradcam import GradCAM
 
 img_path = 'elephant.jpg'
 
@@ -65,7 +66,7 @@ image = load_img(img_path, target_size=(224, 224))
 image = img_to_array(image)
 image = imagenet_utils.preprocess_input(image)
 
-model = VGG16(weights="imagenet")
+model = VGG16(weights="imagenet", input_shape=(224, 224, 3))
 
 cam = GradCAM(model)
 # First parameter - image tensor, second - image path, third - alpha value for heatmap (transparency)
