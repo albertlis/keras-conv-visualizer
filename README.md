@@ -52,8 +52,31 @@ Result:
 
 <h3 id="grad-cam">Grad-CAM activation visualization</h3>
 
-
 ### Intermediate activations visualization
+```python
+from keras.models import load_model
+from keras.preprocessing import image
+from keras_conv_visualization.intermediate_activations import IntermediateActivations
+
+model = load_model('some_model.h5')
+img = image.load_img('some_image.png', target_size=(96, 96), color_mode='grayscale')
+img_tensor = image.img_to_array(img)
+img_tensor /= 255
+
+int_activations = IntermediateActivations(model)
+int_activations.plot_intermediate_activations(img_tensor)
+```
+Input image:
+
+[![input-image.png](https://i.postimg.cc/1tBsV71h/input-image.png)](https://postimg.cc/47Yrr53B)
+
+Results:
+<p align="center">
+  <img src = "https://i.postimg.cc/5NS4htRN/r1.png" width=350 height=350>
+  <img src = "https://i.postimg.cc/wjxqgdC5/r2.png" width=350 height=350>
+  <img src = "https://i.postimg.cc/66R5hcVZ/r3.png" width=350 height=350>
+  <img src = "https://i.postimg.cc/jdbq3fvF/r4.png" width=350 height=350>
+</p>
 
 ## PyPi
 [keras-conv-visualizer](https://pypi.org/project/keras-conv-visualizer/)
