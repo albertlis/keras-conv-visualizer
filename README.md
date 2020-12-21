@@ -32,9 +32,9 @@ This package is a set of tools for visualizing convolutional layers from keras m
 #### Status: _in progress_
 ### Filters visualization
 ```python
-from keras_conv_visualizer.filters import FilterVisualization
 import matplotlib.pyplot as plt
 from tensorflow.keras.applications import VGG16
+from keras_conv_visualizer.filters import FilterVisualization
 
 model = VGG16(weights="imagenet", include_top=False)
 layer_name = "block5_conv3"
@@ -52,20 +52,53 @@ Result:
 
 <h3 id="grad-cam">Grad-CAM activation visualization</h3>
 
+```python
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.applications import VGG16, imagenet_utils
+import matplotlib.pyplot as plt
+from keras_conv_visualization.gradcam import GradCAM
+
+img_path = 'elephant.jpg'
+
+# load the input image from disk (in Keras/TensorFlow format) and preprocess it
+image = load_img(img_path, target_size=(224, 224))
+image = img_to_array(image)
+image = imagenet_utils.preprocess_input(image)
+
+model = VGG16(weights="imagenet")
+
+cam = GradCAM(model)
+# First parameter - image tensor, second - image path, third - alpha value for heatmap (transparency)
+heatmap, output = cam.make_superimposed_img(image, img_path, alpha=0.6)
+
+plt.imshow(heatmap)
+plt.imshow(output)
+```
+Input image:
+
+| <img src = "https://i.postimg.cc/nrtpXsL5/elephant.png" width=350> | <img src = "https://i.postimg.cc/j2DT3GjH/elephant-heatmap.jpg" width=350> |
+|:--:| :--:|
+| *Input image* | *Result* |
+
+Results:
+
 ### Intermediate activations visualization
 ```python
 from keras.models import load_model
 from keras.preprocessing import image
 from keras_conv_visualization.intermediate_activations import IntermediateActivations
 
-model = load_model('some_model.h5')
+# load the input image from disk (in Keras/TensorFlow format) and preprocess it
 img = image.load_img('some_image.png', target_size=(96, 96), color_mode='grayscale')
 img_tensor = image.img_to_array(img)
 img_tensor /= 255
 
+model = load_model('some_model.h5')
+
 int_activations = IntermediateActivations(model)
 int_activations.plot_intermediate_activations(img_tensor)
 ```
+
 Input image:
 
 [![input-image.png](https://i.postimg.cc/1tBsV71h/input-image.png)](https://postimg.cc/47Yrr53B)
