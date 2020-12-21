@@ -19,11 +19,11 @@ This package is a set of tools for visualizing convolutional layers from keras m
 * [Intermediate activations visualization](#intermediate-activations-visualization)
 
 ## Libraries
-- NumPy - version ?
-- TensorFlow - version ?
-- OpenCV - version ?
-- Matplotlib - version ?
-- Keras - version ?
+- Keras - version 2.4.3
+- Matplotlib - version 3.3.3
+- NumPy - version 1.19.4
+- OpenCV - version 4.4.0.46
+- TensorFlow - version 2.4.0rc1
 
 ## Setup
 * Install from PyPi: `pip install keras-conv-visualizer`
