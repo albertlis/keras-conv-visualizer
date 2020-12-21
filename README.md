@@ -31,6 +31,24 @@ This package is a set of tools for visualizing convolutional layers from keras m
 ## Documentation
 #### Status: _in progress_
 ### Filters visualization
+```python
+from keras_conv_visualizer.filters import FilterVisualization
+import matplotlib.pyplot as plt
+from tensorflow.keras.applications import VGG16
+
+model = VGG16(weights="imagenet", include_top=False)
+layer_name = "block5_conv3"
+
+# First parameter - trained keras model, second - input_size
+fv = FilterVisualization(model, (224, 224, 3))
+# First parameter - layer feature index (ex. block1_conv1 has (224, 224, 64) index is from 0 to 63)
+# Second parameter - layer name
+loss, img = fv.visualize_filter(0, layer_name)
+plt.imshow(img)
+```
+Result:
+
+[![filters.png](https://i.postimg.cc/YCxdK1nP/filters.png)](https://postimg.cc/Mnv71j80)
 
 <h3 id="grad-cam">Grad-CAM activation visualization</h3>
 
@@ -42,6 +60,7 @@ This package is a set of tools for visualizing convolutional layers from keras m
 
 ## TODO
 - Add shap values
+- Automatically recognition input size for FilterVisualization
 
 ## Development
 Want to contribute? Great!
