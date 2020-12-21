@@ -75,13 +75,12 @@ heatmap, output = cam.make_superimposed_img(image, img_path, alpha=0.6)
 plt.imshow(heatmap)
 plt.imshow(output)
 ```
-Input image:
-
-| <img src = "https://i.postimg.cc/nrtpXsL5/elephant.png" width=350> | <img src = "https://i.postimg.cc/j2DT3GjH/elephant-heatmap.jpg" width=350> |
-|:--:| :--:|
-| *Input image* | *Result* |
-
 Results:
+
+| <img src = "https://i.postimg.cc/nrtpXsL5/elephant.png" width=350> | <img src = "https://i.postimg.cc/G3Vzdr9W/heatmap.png" width=500> | <img src = "https://i.postimg.cc/28WG5JZV/superimposed.png" width=500> |
+|:--:| :--: | :--: |
+| *Input image* | *Heatmap* | *Superimposed image* |
+
 
 ### Intermediate activations visualization
 ```python
