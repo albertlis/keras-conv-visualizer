@@ -8,9 +8,9 @@ class FilterVisualization:
         self.__model = model
         input_shape = model.layers[0].input_shape
         if isinstance(input_shape, list):
-            self.image_size = model.layers[0].input_shape[0][1:]
+            self.image_size = input_shape[0][1:]
         else:
-            self.image_size = model.layers[0].input_shape[1:]
+            self.image_size = input_shape[1:]
 
     def __compute_loss(self, input_image, filter_index, feature_extractor):
         activation = feature_extractor(input_image)
@@ -30,8 +30,8 @@ class FilterVisualization:
         img += learning_rate * grads
         return loss, img
 
-    def __initialize_image(self, img_size):
-        img = tf.random.uniform((1, img_size[0], img_size[1], img_size[2]))
+    def __initialize_image(self):
+        img = tf.random.uniform((1, self.image_size[0], self.image_size[1], self.image_size[2]))
         # VGG16 expects inputs in the range [-1, +1].
         # Here we scale our random inputs to [-0.125, +0.125]
         return (img - 0.5) * 0.25
@@ -41,7 +41,7 @@ class FilterVisualization:
         # print(f'Processing filter {filter_index}')
         iterations = 30
         learning_rate = 10.0
-        img = self.__initialize_image(self.image_size)
+        img = self.__initialize_image()
         layer = self.__model.get_layer(name=layer_name)
         feature_extractor = keras.Model(inputs=self.__model.inputs, outputs=layer.output)
         for iteration in range(iterations):
